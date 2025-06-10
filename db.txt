@@ -1,0 +1,18 @@
+USE StockManagement;
+GO
+
+CREATE TABLE HistoricalPrices (							-- đổi tên table
+    id INT IDENTITY(1,1) PRIMARY KEY,				-- key tự tăng
+    ticker char(6) NOT NULL,	
+	date DATE NOT NULL,           -- Ngày tạo
+    openDay DATE NOT NULL,                    -- Ngày mở
+    closeDay DATE NOT NULL,                    -- Ngày đóng
+    high FLOAT NOT NULL CHECK (high > 0),		-- float >= 0
+	low FLOAT NOT NULL CHECK (low > 0),		-- float >= 0
+
+	-- FK
+						-- Id của table foreign tới,
+													-- nhớ đổi lại type để trùng với type của id bảng tham chiếu tới
+    CONSTRAINT FK_HistoricalPrices_tblStocks			-- đặt tên tham chiếu, ko cần chính xác
+		FOREIGN KEY (ticker) REFERENCES tblStocks(ticker)
+);
